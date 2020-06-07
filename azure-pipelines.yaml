@@ -13,8 +13,8 @@ jobs:
       - task: UsePythonVersion@0
         inputs:
           versionSpec: 3.8
-      - scripts/install
-      - scripts/test
+      - bash: scripts/install
+      - bash: scripts/test
 
   - job: pypi
     dependsOn: [test]
@@ -23,9 +23,9 @@ jobs:
       - task: UsePythonVersion@0
         inputs:
           versionSpec: 3.8
-      - script: scripts/install
-      - script: scripts/build
-      - script: scripts/publish
+      - bash: scripts/install
+      - bash: scripts/build
+      - bash: scripts/publish
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: $(pypiTestToken)

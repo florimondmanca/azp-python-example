@@ -8,7 +8,7 @@ Setup (do it once):
 
 - Fork this repository.
 - Edit the package name in `setup.py` to something unique to you, e.g. `<USERNAME>-example`.
-- Set up the `pypi-credentials` variable group:
+- Set up the `pypi-credentials` variable group (to reuse credentials across packages):
   - In Azure Pipelines, go to your project, then "Library" (under Pipelines), then "Add variable group".
   - Name it `pypi-credentials`.
   - Create an API token on TestPyPI, then add it as a secret `pypiTestToken` variable to the variable group.
