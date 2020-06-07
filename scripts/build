@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+BIN="venv/bin/"
+
+set -x
+
+${BIN}python setup.py sdist bdist_wheel
+${BIN}twine check dist/*
+rm -r build

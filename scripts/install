@@ -1,0 +1,9 @@
+#!/bin/sh -e
+
+BIN="venv/bin/"
+
+set -x
+
+python -m venv venv
+${BIN}pip install -U pip
+${BIN}pip install -r requirements.txt

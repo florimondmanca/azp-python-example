@@ -1,0 +1,15 @@
+#!/bin/sh -e
+
+BIN="venv/bin/"
+
+VERSION_FILE="example/__version__.py"
+VERSION=$(grep __version__ ${VERSION_FILE} | grep -o '[0-9][^"]*')
+
+if [ ! -z $CI && "refs/tags/${VERSION}" != "${GIT_REF}" ] ; then
+    echo "Git ref '${GIT_REF}' did not match package version '${VERSION}'"
+    exit 1
+fi
+
+set -x
+
+${BIN}twine upload dist/*

@@ -1,0 +1,32 @@
+trigger:
+  - master
+  - refs/tags/*
+
+variables:
+  - name: CI
+    value: true
+  - group: pypi-credentials
+
+jobs:
+  - job: test
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.8
+      - scripts/install
+      - scripts/test
+
+  - job: pypi
+    dependsOn: [test]
+    condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: 3.8
+      - script: scripts/install
+      - script: scripts/build
+      - script: scripts/publish
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: $(pypiTestToken)
+          TWINE_REPOSITORY: testpypi
