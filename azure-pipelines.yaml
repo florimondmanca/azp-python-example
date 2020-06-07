@@ -14,7 +14,9 @@ jobs:
         inputs:
           versionSpec: 3.8
       - bash: scripts/install
+        displayName: "Install dependencies"
       - bash: scripts/test
+        displayName: "Test"
 
   - job: pypi
     dependsOn: [test]
@@ -24,9 +26,13 @@ jobs:
         inputs:
           versionSpec: 3.8
       - bash: scripts/install
+        displayName: "Install dependencies"
       - bash: scripts/build
+        displayName: "Build package"
       - bash: scripts/publish
         env:
+          GIT_REF: $(Build.SourceBranch)
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: $(pypiTestToken)
           TWINE_REPOSITORY: testpypi
+        displayName: "Publish package"
